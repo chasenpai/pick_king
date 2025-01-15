@@ -22,8 +22,7 @@ RouletteState _$RouletteStateFromJson(Map<String, dynamic> json) {
 mixin _$RouletteState {
   Roulette? get roulette => throw _privateConstructorUsedError;
   bool get isSpinning => throw _privateConstructorUsedError;
-  int? get result => throw _privateConstructorUsedError;
-  String? get massage => throw _privateConstructorUsedError;
+  String? get result => throw _privateConstructorUsedError;
 
   /// Serializes this RouletteState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,8 +40,7 @@ abstract class $RouletteStateCopyWith<$Res> {
           RouletteState value, $Res Function(RouletteState) then) =
       _$RouletteStateCopyWithImpl<$Res, RouletteState>;
   @useResult
-  $Res call(
-      {Roulette? roulette, bool isSpinning, int? result, String? massage});
+  $Res call({Roulette? roulette, bool isSpinning, String? result});
 
   $RouletteCopyWith<$Res>? get roulette;
 }
@@ -65,7 +63,6 @@ class _$RouletteStateCopyWithImpl<$Res, $Val extends RouletteState>
     Object? roulette = freezed,
     Object? isSpinning = null,
     Object? result = freezed,
-    Object? massage = freezed,
   }) {
     return _then(_value.copyWith(
       roulette: freezed == roulette
@@ -79,10 +76,6 @@ class _$RouletteStateCopyWithImpl<$Res, $Val extends RouletteState>
       result: freezed == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
-              as int?,
-      massage: freezed == massage
-          ? _value.massage
-          : massage // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -110,8 +103,7 @@ abstract class _$$RouletteStateImplCopyWith<$Res>
       __$$RouletteStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Roulette? roulette, bool isSpinning, int? result, String? massage});
+  $Res call({Roulette? roulette, bool isSpinning, String? result});
 
   @override
   $RouletteCopyWith<$Res>? get roulette;
@@ -133,7 +125,6 @@ class __$$RouletteStateImplCopyWithImpl<$Res>
     Object? roulette = freezed,
     Object? isSpinning = null,
     Object? result = freezed,
-    Object? massage = freezed,
   }) {
     return _then(_$RouletteStateImpl(
       roulette: freezed == roulette
@@ -147,10 +138,6 @@ class __$$RouletteStateImplCopyWithImpl<$Res>
       result: freezed == result
           ? _value.result
           : result // ignore: cast_nullable_to_non_nullable
-              as int?,
-      massage: freezed == massage
-          ? _value.massage
-          : massage // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -160,7 +147,7 @@ class __$$RouletteStateImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RouletteStateImpl implements _RouletteState {
   const _$RouletteStateImpl(
-      {this.roulette, this.isSpinning = false, this.result, this.massage});
+      {this.roulette, this.isSpinning = false, this.result});
 
   factory _$RouletteStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$RouletteStateImplFromJson(json);
@@ -171,13 +158,11 @@ class _$RouletteStateImpl implements _RouletteState {
   @JsonKey()
   final bool isSpinning;
   @override
-  final int? result;
-  @override
-  final String? massage;
+  final String? result;
 
   @override
   String toString() {
-    return 'RouletteState(roulette: $roulette, isSpinning: $isSpinning, result: $result, massage: $massage)';
+    return 'RouletteState(roulette: $roulette, isSpinning: $isSpinning, result: $result)';
   }
 
   @override
@@ -189,14 +174,12 @@ class _$RouletteStateImpl implements _RouletteState {
                 other.roulette == roulette) &&
             (identical(other.isSpinning, isSpinning) ||
                 other.isSpinning == isSpinning) &&
-            (identical(other.result, result) || other.result == result) &&
-            (identical(other.massage, massage) || other.massage == massage));
+            (identical(other.result, result) || other.result == result));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, roulette, isSpinning, result, massage);
+  int get hashCode => Object.hash(runtimeType, roulette, isSpinning, result);
 
   /// Create a copy of RouletteState
   /// with the given fields replaced by the non-null parameter values.
@@ -218,8 +201,7 @@ abstract class _RouletteState implements RouletteState {
   const factory _RouletteState(
       {final Roulette? roulette,
       final bool isSpinning,
-      final int? result,
-      final String? massage}) = _$RouletteStateImpl;
+      final String? result}) = _$RouletteStateImpl;
 
   factory _RouletteState.fromJson(Map<String, dynamic> json) =
       _$RouletteStateImpl.fromJson;
@@ -229,9 +211,7 @@ abstract class _RouletteState implements RouletteState {
   @override
   bool get isSpinning;
   @override
-  int? get result;
-  @override
-  String? get massage;
+  String? get result;
 
   /// Create a copy of RouletteState
   /// with the given fields replaced by the non-null parameter values.

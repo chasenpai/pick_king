@@ -12,8 +12,7 @@ _$RouletteStateImpl _$$RouletteStateImplFromJson(Map<String, dynamic> json) =>
           ? null
           : Roulette.fromJson(json['roulette'] as Map<String, dynamic>),
       isSpinning: json['isSpinning'] as bool? ?? false,
-      result: (json['result'] as num?)?.toInt(),
-      massage: json['massage'] as String?,
+      result: json['result'] as String?,
     );
 
 Map<String, dynamic> _$$RouletteStateImplToJson(_$RouletteStateImpl instance) =>
@@ -21,5 +20,4 @@ Map<String, dynamic> _$$RouletteStateImplToJson(_$RouletteStateImpl instance) =>
       'roulette': instance.roulette,
       'isSpinning': instance.isSpinning,
       'result': instance.result,
-      'massage': instance.massage,
     };

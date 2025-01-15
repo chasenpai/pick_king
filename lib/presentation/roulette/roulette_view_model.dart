@@ -82,11 +82,28 @@ class RouletteViewModel with ChangeNotifier {
       _state = _state.copyWith(
         roulette: updatedRoulette,
       );
+      notifyListeners();
     }else {
       _messageController.add('옵션은 최소 2개 있어야 해요.');
     }
+  }
 
-    notifyListeners();
+  void removeLastItem() async {
+    final currentRoulette = _state.roulette!;
+    if(currentRoulette.items.length > 2) {
+      final updatedItems = List<String>.from(currentRoulette.items)
+        ..removeLast();
+      final updatedRoulette = currentRoulette.copyWith(
+        items: updatedItems,
+      );
+      await _rouletteRepository.saveRoulette(updatedRoulette);
+      _state = _state.copyWith(
+        roulette: updatedRoulette,
+      );
+      notifyListeners();
+    }else {
+      _messageController.add('옵션은 최소 2개 있어야 해요.');
+    }
   }
 
   void editItem(int index, String item) async {
@@ -99,6 +116,13 @@ class RouletteViewModel with ChangeNotifier {
     await _rouletteRepository.saveRoulette(updatedRoulette);
     _state = _state.copyWith(
       roulette: updatedRoulette,
+    );
+    notifyListeners();
+  }
+
+  void updateResult(int index) async {
+    _state = _state.copyWith(
+      result: _state.roulette!.items[index],
     );
     notifyListeners();
   }

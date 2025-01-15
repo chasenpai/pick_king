@@ -9,7 +9,7 @@ class RouletteState with _$RouletteState {
   const factory RouletteState({
     Roulette? roulette,
     @Default(false) bool isSpinning,
-    int? result,
+    String? result,
   }) = _RouletteState;
 
   factory RouletteState.fromJson(Map<String, dynamic> json) => _$RouletteStateFromJson(json);
