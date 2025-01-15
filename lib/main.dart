@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pick_king/config/di_setup.dart';
+import 'package:pick_king/data/entity/dice_entity.dart';
 import 'package:pick_king/data/entity/roulette_entity.dart';
 import 'package:pick_king/router.dart';
 
@@ -8,7 +9,9 @@ void main() async {
   diSetup();
   await Hive.initFlutter();
   Hive.registerAdapter<RouletteEntity>(RouletteEntityAdapter());
+  Hive.registerAdapter<DiceEntity>(DiceEntityAdapter());
   await Hive.openBox('pick_king.db');
+  //await Hive.deleteBoxFromDisk('pick_king.db');
   runApp(const MyApp());
 }
 

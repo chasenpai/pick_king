@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
-import 'package:pick_king/dice_screen.dart';
 import 'package:pick_king/draw_name_screen.dart';
 import 'package:pick_king/home_screen.dart';
+import 'package:pick_king/presentation/dice/screen/dice_root.dart';
 import 'package:pick_king/presentation/roulette/screen/roulette_root.dart';
 import 'package:pick_king/random_number_screen.dart';
 
@@ -13,12 +13,12 @@ final router = GoRouter(
       builder: (context, state) => HomeScreen(),
     ),
     GoRoute(
-      path: '/dice',
-      builder: (context, state) => DiceScreen(),
-    ),
-    GoRoute(
       path: '/roulette',
       builder: (context, state) => const RouletteRoot(),
+    ),
+    GoRoute(
+      path: '/dice',
+      builder: (context, state) => const DiceRoot(),
     ),
     GoRoute(
       path: '/draw-name',
