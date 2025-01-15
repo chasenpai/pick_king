@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pick_king/presentation/components/common_text_button.dart';
 
 class RouletteItemDialog extends StatefulWidget {
   final String item;
@@ -37,37 +38,41 @@ class _RouletteItemDialogState extends State<RouletteItemDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.white,
       contentPadding: const EdgeInsets.symmetric(
-        horizontal: 15.0,
+        horizontal: 20.0,
         vertical: 20.0,
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          TextField(
-            controller: _controller,
-          ),
-          Row(
-            children: [
-              ElevatedButton(
+      content: TextField(
+        controller: _controller,
+        decoration: const InputDecoration(
+          disabledBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+        ),
+        cursorColor: Colors.orange,
+      ),
+      actions: [
+        Row(
+          children: [
+            Expanded(
+              child: CommonTextButton(
+                text: '삭제',
                 onPressed: widget.onDeleteTap,
-                child: Text(
-                  '삭제',
-                ),
               ),
-              ElevatedButton(
+            ),
+            const SizedBox(width: 6.0,),
+            Expanded(
+              child: CommonTextButton(
+                text: '확인',
                 onPressed: () {
                   widget.onConfirmTap(_controller.text);
                 },
-                child: Text(
-                  '확인',
-                ),
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

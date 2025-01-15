@@ -5,6 +5,7 @@ import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:pick_king/presentation/roulette/roulette_state.dart';
 import 'package:pick_king/util/color_utils.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:shaped_widget/shaped_widget.dart';
 
 class RouletteScreen extends StatefulWidget {
   final RouletteState state;
@@ -34,21 +35,25 @@ class _RouletteScreenState extends State<RouletteScreen> {
     super.dispose();
   }
 
+  void _roll() {
+    if (widget.state.isSpinning) return;
+    final random = Random().nextInt(widget.state.roulette!.items.length);
+    _subject.add(random);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text(
-          '룰렛 돌리기',
-        ),
-        centerTitle: true,
         actions: [
           IconButton(
             onPressed: widget.onItemAddTap,
             icon: const Icon(
-              Icons.add
+              Icons.add,
+              size: 28.0,
+              color: Colors.black87,
             ),
           ),
         ],
@@ -58,68 +63,121 @@ class _RouletteScreenState extends State<RouletteScreen> {
           horizontal: 20.0,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            SizedBox(
-              height: 72.0,
-              child: widget.state.roulette != null && !widget.state.isSpinning && _subject.valueOrNull != null ? Text(
-                '결과: ${widget.state.roulette!.items[_subject.valueOrNull!]}',
-              ) : null,
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 42.0,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    !widget.state.isSpinning && _subject.valueOrNull != null
+                        ? '🥳'
+                        : '',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 30.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  Text(
+                    !widget.state.isSpinning && _subject.valueOrNull != null
+                      ? widget.state.roulette!.items[_subject.valueOrNull!]
+                      : '',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 72.0,),
             if(widget.state.roulette != null)
-              Expanded(
-                child: FortuneWheel(
-                  selected: _subject.stream,
-                  physics: NoPanPhysics(),
-                  animateFirst: false,
-                  onAnimationStart: widget.onAnimate,
-                  onAnimationEnd: widget.onAnimate,
-                  items: widget.state.roulette!.items.asMap().entries.map((e) {
-                    final index = e.key;
-                    final item = e.value;
-                    return FortuneItem(
-                      onTap: () {
-                        widget.onItemTap(index, item);
-                      },
-                      style: FortuneItemStyle(
-                        color: Color(int.parse('0xFF${ColorUtils.getColorByIndex(index)}')),
-                      ),
-                      child: Transform.rotate(
-                        angle: 90 * 3.14159 / 180,
-                        child: Text(
-                          item,
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 20.0,
+              SizedBox(
+                height: MediaQuery.of(context).size.width - 40,
+                child: Stack(
+                  children: [
+                    Column(
+                      children: [
+                        const SizedBox(height: 12.0,),
+                        Expanded(
+                          child: FortuneWheel(
+                            selected: _subject.stream,
+                            animateFirst: false,
+                            onAnimationStart: widget.onAnimate,
+                            onAnimationEnd: widget.onAnimate,
+                            onFling: _roll,
+                            items: widget.state.roulette!.items.asMap().entries.map((e) {
+                              final index = e.key;
+                              final item = e.value;
+                              return FortuneItem(
+                                onTap: () {
+                                  widget.onItemTap(index, item);
+                                },
+                                style: FortuneItemStyle(
+                                  color: Color(int.parse('0xFF${ColorUtils.getColorByIndex(index)}')),
+                                  borderColor: Colors.black87,
+                                  borderWidth: 2.0,
+                                ),
+                                child: Transform.rotate(
+                                  angle: 90 * 3.14159 / 180,
+                                  child: Text(
+                                    item,
+                                    style: const TextStyle(
+                                      color: Colors.black87,
+                                      fontSize: 18.0,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }).toList(),
+                            indicators: const [],
                           ),
                         ),
-                      ),
-                    );
-                  }).toList(),
-                  indicators: const [
-                    FortuneIndicator(
-                      alignment: Alignment.topCenter,
-                      child: TriangleIndicator(
-                        color: Colors.orange,
+                      ],
+                    ),
+                    Positioned(
+                      left: MediaQuery.of(context).size.width / 2 - 36.0,
+                      child: Transform.rotate(
+                        angle: 180 * 3.14159 / 180,
+                        child: Triangle(
+                          size: 32.0,
+                          color: Colors.white,
+                          isEquilateral: false,
+                          borderWidth: 2.0,
+                          borderColor: Colors.black87,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-            const SizedBox(height: 72.0,),
+            const Spacer(),
+            const SizedBox(height: 60.0,),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          if (widget.state.isSpinning) return;
-          final random = Random().nextInt(widget.state.roulette!.items.length);
-          _subject.add(random);
-        },
-        child: const Icon(
-          Icons.refresh,
-        ),
+      floatingActionButton: Stack(
+        children: [
+          FloatingActionButton(
+            onPressed: _roll,
+            shape: const CircleBorder(),
+            elevation: 0,
+            backgroundColor: Colors.orange,
+            child: const Icon(
+              Icons.refresh,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
+
