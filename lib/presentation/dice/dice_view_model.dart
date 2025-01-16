@@ -75,10 +75,10 @@ class DiceViewModel with ChangeNotifier {
       _state = _state.copyWith(
         dice: updatedDice,
       );
+      notifyListeners();
     }else {
       _messageController.add('주사위는 최대 6개까지 추가할 수 있어요.');
     }
-    notifyListeners();
   }
 
   void removeDice() async {
@@ -93,10 +93,10 @@ class DiceViewModel with ChangeNotifier {
       _state = _state.copyWith(
         dice: updatedDice,
       );
+      notifyListeners();
     }else {
       _messageController.add('주사위는 최소 1개 있어야 해요.');
     }
-    notifyListeners();
   }
 
   int calculateSum() {

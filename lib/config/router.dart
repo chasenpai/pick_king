@@ -2,8 +2,8 @@ import 'package:go_router/go_router.dart';
 import 'package:pick_king/draw_name_screen.dart';
 import 'package:pick_king/home_screen.dart';
 import 'package:pick_king/presentation/dice/screen/dice_root.dart';
+import 'package:pick_king/presentation/random_number/screen/random_number_root.dart';
 import 'package:pick_king/presentation/roulette/screen/roulette_root.dart';
-import 'package:pick_king/random_number_screen.dart';
 
 final router = GoRouter(
   initialLocation: '/',
@@ -26,7 +26,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/random-number',
-      builder: (context, state) => RandomNumberScreen(),
+      builder: (context, state) => const RandomNumberRoot(),
     ),
   ],
 );
