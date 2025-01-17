@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
-import 'package:pick_king/presentation/components/common_control_button.dart';
+import 'package:pick_king/presentation/components/add_remove_roll_button.dart';
 import 'package:pick_king/presentation/roulette/roulette_state.dart';
 import 'package:pick_king/util/color_utils.dart';
 import 'package:rxdart/rxdart.dart';
@@ -87,70 +87,64 @@ class _RouletteScreenState extends State<RouletteScreen> {
               ),
               if(widget.state.roulette != null)
                 SizedBox(
-                  height: MediaQuery.of(context).size.width - 40,
-                  child: Stack(
+                  height: MediaQuery.of(context).size.width,
+                  child: Column(
                     children: [
-                      Column(
-                        children: [
-                          const SizedBox(height: 12.0,),
-                          Expanded(
-                            child: FortuneWheel(
-                              selected: _subject.stream,
-                              animateFirst: false,
-                              onAnimationStart: widget.onAnimate,
-                              onAnimationEnd: widget.onAnimate,
-                              onFling: _roll,
-                              items: widget.state.roulette!.items.asMap().entries.map((e) {
-                                final index = e.key;
-                                final item = e.value;
-                                return FortuneItem(
-                                  onTap: () {
-                                    widget.onItemTap(index, item);
-                                  },
-                                  style: FortuneItemStyle(
-                                    color: Color(int.parse('0xFF${ColorUtils.getColorByIndex(index)}')),
-                                    borderColor: Colors.black87,
-                                    borderWidth: 2.0,
-                                  ),
-                                  child: Transform.rotate(
-                                    angle: 90 * 3.14159 / 180,
-                                    child: Text(
-                                      item,
-                                      style: const TextStyle(
-                                        color: Colors.black87,
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                              indicators: const [],
-                            ),
-                          ),
-                        ],
+                      Transform.rotate(
+                        angle: 180 * 3.14159 / 180,
+                        child: Triangle(
+                          size: 32.0,
+                          color: Colors.orange,
+                          isEquilateral: false,
+                          // borderWidth: 2.0,
+                          // borderColor: Colors.black87,
+                        ),
                       ),
-                      Positioned(
-                        left: MediaQuery.of(context).size.width / 2 - 36.0,
-                        child: Transform.rotate(
-                          angle: 180 * 3.14159 / 180,
-                          child: Triangle(
-                            size: 32.0,
-                            color: Colors.white,
-                            isEquilateral: false,
-                            borderWidth: 2.0,
-                            borderColor: Colors.black87,
-                          ),
+                      const SizedBox(height: 10.0,),
+                      Expanded(
+                        child: FortuneWheel(
+                          selected: _subject.stream,
+                          animateFirst: false,
+                          onAnimationStart: widget.onAnimate,
+                          onAnimationEnd: widget.onAnimate,
+                          onFling: _roll,
+                          items: widget.state.roulette!.items.asMap().entries.map((e) {
+                            final index = e.key;
+                            final item = e.value;
+                            return FortuneItem(
+                              onTap: () {
+                                widget.onItemTap(index, item);
+                              },
+                              style: FortuneItemStyle(
+                                color: Color(int.parse('0xFF${ColorUtils.getColorByIndex(index)}')),
+                                borderColor: Colors.black87,
+                                borderWidth: 0.0,
+                              ),
+                              child: Transform.rotate(
+                                angle: 90 * 3.14159 / 180,
+                                child: Text(
+                                  item,
+                                  style: const TextStyle(
+                                    color: Colors.black87,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          indicators: const [],
                         ),
                       ),
                     ],
                   ),
                 ),
               const Spacer(),
-              CommonControlButton(
+              AddRemoveRollButton(
+                rollText: '돌리기',
                 onAddPressed: widget.onItemAddTap,
                 onRemovePressed: widget.onItemRemoveTap,
-                onStartPressed: _roll,
+                onRollPressed: _roll,
               ),
               const SizedBox(height: 60.0,),
             ],

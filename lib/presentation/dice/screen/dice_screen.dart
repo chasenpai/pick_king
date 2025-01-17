@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pick_king/presentation/components/common_control_button.dart';
+import 'package:pick_king/presentation/components/add_remove_roll_button.dart';
 import 'package:pick_king/presentation/dice/dice_state.dart';
 
 class DiceScreen extends StatefulWidget {
@@ -117,10 +117,11 @@ class _DiceScreenState extends State<DiceScreen> with SingleTickerProviderStateM
                   ),
                 ),
               const Spacer(),
-              CommonControlButton(
+              AddRemoveRollButton(
+                rollText: '던지기',
                 onAddPressed: widget.onDiceAddTap,
                 onRemovePressed: widget.onDiceRemoveTap,
-                onStartPressed: _throw,
+                onRollPressed: _throw,
               ),
               const SizedBox(height: 60.0,),
             ],

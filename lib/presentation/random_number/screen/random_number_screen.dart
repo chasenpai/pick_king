@@ -39,7 +39,7 @@ class _RandomNumberScreenState extends State<RandomNumberScreen> with SingleTick
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 700),
     );
     _animationController.addListener(() {
       if(_animationController.isAnimating) {
@@ -49,7 +49,6 @@ class _RandomNumberScreenState extends State<RandomNumberScreen> with SingleTick
     });
     _animationController.addStatusListener((status) {
       if(status == AnimationStatus.completed) {
-        widget.toggleCreating();
         widget.saveRandomNumber();
       }
     });

@@ -73,6 +73,7 @@ class RandomNumberViewModel with ChangeNotifier {
     await _randomNumberRepository.saveRandomNumber(updatedRandomNumber);
     _state = _state.copyWith(
       randomNumber: updatedRandomNumber,
+      isCreating: false,
     );
     notifyListeners();
   }
