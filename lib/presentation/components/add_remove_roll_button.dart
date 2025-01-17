@@ -1,34 +1,36 @@
 import 'package:flutter/material.dart';
 
-class CommonControlButton extends StatefulWidget {
+class AddRemoveRollButton extends StatefulWidget {
 
+  final String rollText;
   final VoidCallback onAddPressed;
   final VoidCallback onRemovePressed;
-  final VoidCallback onStartPressed;
+  final VoidCallback onRollPressed;
 
-  const CommonControlButton({
+  const AddRemoveRollButton({
+    required this.rollText,
     required this.onAddPressed,
     required this.onRemovePressed,
-    required this.onStartPressed,
+    required this.onRollPressed,
     super.key,
   });
 
   @override
-  State<CommonControlButton> createState() => _CommonControlButtonState();
+  State<AddRemoveRollButton> createState() => _AddRemoveRollButtonState();
 }
 
-class _CommonControlButtonState extends State<CommonControlButton> {
+class _AddRemoveRollButtonState extends State<AddRemoveRollButton> {
 
   bool _isAddPressed = false;
   bool _isRemovePressed = false;
-  bool _isStartPressed = false;
+  bool _isRollPressed = false;
 
   @override
   Widget build(BuildContext context) {
     const double height = 54.0;
     return Container(
       height: height,
-      width: 196.0,
+      width: 243.0,
       decoration: BoxDecoration(
         color: Colors.orange,
         borderRadius: BorderRadius.circular(16.0),
@@ -58,21 +60,24 @@ class _CommonControlButtonState extends State<CommonControlButton> {
                 child: Container(
                   height: height,
                   color: _isAddPressed ? Colors.grey[300] : Colors.transparent,
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 26.0,
+                  child: Center(
+                    child: Text(
+                      '추가',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
             Expanded(
               child: GestureDetector(
-                onTapDown: (_) {
-                  setState(() {
+                onTapDown: (_) => setState(() {
                     _isRemovePressed = true;
-                  });
-                },
+                  }),
                 onTapUp: (_) {
                   setState(() {
                     _isRemovePressed = false;
@@ -87,10 +92,15 @@ class _CommonControlButtonState extends State<CommonControlButton> {
                 child: Container(
                   height: height,
                   color: _isRemovePressed ? Colors.grey[300] : Colors.transparent,
-                  child: const Icon(
-                    Icons.remove,
-                    color: Colors.white,
-                    size: 26.0,
+                  child: const Center(
+                    child: Text(
+                     '삭제',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -99,27 +109,32 @@ class _CommonControlButtonState extends State<CommonControlButton> {
               child: GestureDetector(
                 onTapDown: (_) {
                   setState(() {
-                    _isStartPressed = true;
+                    _isRollPressed = true;
                   });
                 },
                 onTapUp: (_) {
                   setState(() {
-                    _isStartPressed = false;
+                    _isRollPressed = false;
                   });
-                  widget.onStartPressed();
+                  widget.onRollPressed();
                 },
                 onTapCancel: () {
                   setState(() {
-                    _isStartPressed = false;
+                    _isRollPressed = false;
                   });
                 },
                 child: Container(
                   height: height,
-                  color: _isStartPressed ? Colors.grey[300] : Colors.transparent,
-                  child: const Icon(
-                    Icons.refresh,
-                    color: Colors.white,
-                    size: 26.0,
+                  color: _isRollPressed ? Colors.grey[300] : Colors.transparent,
+                  child: Center(
+                    child: Text(
+                      widget.rollText,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ),

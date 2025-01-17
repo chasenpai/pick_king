@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                context.push('/draw-name');
+                context.push('/pick-name');
               },
               child: Text(
                 '이름 추첨',

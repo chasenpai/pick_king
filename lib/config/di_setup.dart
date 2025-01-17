@@ -1,11 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:pick_king/data/repository/dice_repository_impl.dart';
+import 'package:pick_king/data/repository/pick_name_repository_impl.dart';
 import 'package:pick_king/data/repository/random_number_repository_impl.dart';
 import 'package:pick_king/data/repository/roulette_repository_impl.dart';
 import 'package:pick_king/domain/repository/dice_repository.dart';
+import 'package:pick_king/domain/repository/pick_name_repository.dart';
 import 'package:pick_king/domain/repository/random_number_repository.dart';
 import 'package:pick_king/domain/repository/roulette_repository.dart';
 import 'package:pick_king/presentation/dice/dice_view_model.dart';
+import 'package:pick_king/presentation/pick_name/pick_name_view_model.dart';
 import 'package:pick_king/presentation/random_number/random_number_view_model.dart';
 import 'package:pick_king/presentation/roulette/roulette_view_model.dart';
 
@@ -22,6 +25,9 @@ void diSetup() {
   getIt.registerSingleton<RandomNumberRepository>(
     RandomNumberRepositoryImpl(),
   );
+  getIt.registerSingleton<PickNameRepository>(
+    PickNameRepositoryImpl(),
+  );
 
   getIt.registerFactory<RouletteViewModel>(
     () => RouletteViewModel(
@@ -36,6 +42,11 @@ void diSetup() {
   getIt.registerFactory<RandomNumberViewModel>(
     () => RandomNumberViewModel(
       randomNumberRepository: getIt(),
+    ),
+  );
+  getIt.registerFactory<PickNameViewModel>(
+    () => PickNameViewModel(
+      pickNameRepository: getIt(),
     ),
   );
 
